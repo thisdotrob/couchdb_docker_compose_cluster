@@ -1,0 +1,23 @@
+{
+  "name": "couch",
+  "version": "1.0.0",
+  "description": "``` docker run -it \\            -v bootstrap.sh:/bootstrap.sh \\            alpine:3.8 \\            apk add --no-cache curl && ./bootstrap.sh ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GowerStreet/couch-eventstore-spike.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GowerStreet/couch-eventstore-spike/issues"
+  },
+  "homepage": "https://github.com/GowerStreet/couch-eventstore-spike#readme",
+  "dependencies": {
+    "nano": "^8.0.0"
+  }
+}

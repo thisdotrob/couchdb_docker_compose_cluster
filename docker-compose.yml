@@ -1,0 +1,54 @@
+version: "3.7"
+
+services:
+  script-runner:
+    image: node:11.6.0-alpine
+    networks:
+      network:
+    volumes:
+      - ./scripts:/scripts
+      - ./package.json:/package.json
+      - ./package-lock.json:/package-lock.json
+    command: sh -c "npm install && apk add --no-cache curl && sleep 1d"
+
+  loadbalancer:
+    image: haproxy:1.9.1
+    ports:
+      - 5984:5984
+    networks:
+      network:
+        aliases:
+          - couchdb.docker.com
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    command: bash -c "haproxy -f /usr/local/etc/haproxy/haproxy.cfg"
+
+  couchdb0:
+    environment:
+      NODENAME: couchdb0.docker.com
+    image: couchdb:2.1.1
+    networks:
+      network:
+        aliases:
+          - couchdb0.docker.com # Nodes refuse to talk to other nodes on non fully qualified names
+
+  couchdb1:
+    environment:
+      NODENAME: couchdb1.docker.com
+    image: couchdb:2.1.1
+    networks:
+      network:
+        aliases:
+          - couchdb1.docker.com
+
+  couchdb2:
+    environment:
+      NODENAME: couchdb2.docker.com
+    image: couchdb:2.1.1
+    networks:
+      network:
+        aliases:
+          - couchdb2.docker.com
+
+networks:
+  network:
